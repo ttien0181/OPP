@@ -1,8 +1,11 @@
 package object;
 
 public class Main {
+	
 	public static void main(String[] args) {
-		WebScrapper webscrapper = new WebScrapper("https://www.coindesk.com/");
+		
+		String link ="https://www.coindesk.com";
+		WebScrapper webscrapper = new WebScrapper(link);
 		webscrapper.exportDataToCSV(webscrapper.scrapData());
 		
 	}
