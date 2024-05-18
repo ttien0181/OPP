@@ -11,11 +11,11 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import java.io.FileWriter;
 
-public class Output {
+public class DataExporter {
 	
 	String filePath ;
 	
-	public Output(String path) {
+	public DataExporter(String path) {
 		this.filePath = path; 
 	}
 	
@@ -42,7 +42,7 @@ public class Output {
 
             // Đóng file writer
             writer.close();
-            System.out.println("Dữ liệu đã được lưu vào blockchain_news.csv");
+            System.out.println("Dữ liệu đã được lưu vào " + filePath);
         } catch (IOException e) {
             e.printStackTrace();
         }

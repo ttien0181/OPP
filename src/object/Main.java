@@ -5,8 +5,11 @@ public class Main {
 	public static void main(String[] args) {
 		
 		String link ="https://www.coindesk.com";
-		WebScrapper webscrapper = new WebScrapper(link);
-		webscrapper.exportDataToCSV(webscrapper.scrapData());
+		String path = "blockchain_news.csv";
+		DataCollector dataCollector = new DataCollector(link);
+		DataExporter dataExporter = new DataExporter(path);
+		
+		dataExporter.exportDataToCSV(dataCollector.scrapData());
 		
 	}
 }
