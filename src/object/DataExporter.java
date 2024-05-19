@@ -21,24 +21,12 @@ public class DataExporter {
 	
 	public void exportDataToCSV(List<ArticleData> articles) {
         try {
-        	//Tạo file writer có đường dẫn filePath
-        	FileWriter writer = new FileWriter(this.filePath,true);
-            // Ghi tiêu đề cho file CSV
-            writer.append("Link,Source,Type,Summary,Title,Content,Date,Tags,Author,Category\n");
+        	
+        	Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        	String json = gson.toJson(articles);
 
-            // Duyệt qua danh sách các bài viết và ghi vào file CSV
-            for (ArticleData article : articles) {
-                writer.append(article.getLink()).append(",");
-                writer.append(article.getWebsiteSource()).append(",");
-                writer.append(article.getType()).append(",");
-                writer.append(article.getSummary()).append(",");
-                writer.append(article.getTitle()).append(",");
-                writer.append(article.getDetailedContent()).append(",");
-                writer.append(article.getDate()).append(",");
-                writer.append(article.getTags()).append(",");
-                writer.append(article.getAuthor()).append(",");
-                writer.append(article.getCategory()).append("\n");
-            }
+            FileWriter writer = new FileWriter(this.filePath);
+            writer.write(json);
 
             // Đóng file writer
             writer.close();
