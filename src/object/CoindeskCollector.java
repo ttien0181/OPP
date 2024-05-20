@@ -19,20 +19,19 @@ import java.io.FileWriter;
 import org.jsoup.HttpStatusException;
 
 
-public class DataCollector {
-	private String url;
-	private String path;
+public class CoindeskCollector extends Collector{
 
-    public DataCollector(String link,String path) {//phương thức khởi tạo
+    public CoindeskCollector(String link,String path) {//phương thức khởi tạo
         this.url = link;
         this.path = path;
     }
     
+    @Override
 	public List<ArticleData> scrapData(){//thu thap du lieu tu trang web tra ve 1 List đối tượng Article
 		List<ArticleData> articles = new ArrayList<>();
 
         try {
-        	List<String> existingLinks = Files.readAllLines(Paths.get(path));
+        	String existingLinks = new String(Files.readAllBytes(Paths.get(path)));
         	
     		Document doc = Jsoup.connect(url)
     				.userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3")
@@ -62,10 +61,9 @@ public class DataCollector {
                         String author = getElementAttr(doc2, "meta[property='article:author']", "content");
                         String category = getElementAttr(doc2, "meta[property='article:section']", "content");
                         
-
             			ArticleData article = new ArticleData(link, websiteSource, type, summary, title, detailedContent, date, tags, author, category);
                         articles.add(article);
-                        System.out.println(articleElement);
+                        
         			}
     			} catch (HttpStatusException e) {
     		        // Nếu gặp lỗi HTTP, bỏ qua bài viết và tiếp tục vòng lặp
@@ -85,16 +83,7 @@ public class DataCollector {
     		}
         return articles;
     	}
-	
-	private String getElementAttr(Document doc, String cssQuery, String attr) {
-        Element element = doc.selectFirst(cssQuery);
-        return (element != null) ? element.attr(attr) : "";
-    }
 
-    private String getElementText(Document doc, String cssQuery) {
-        Element element = doc.selectFirst(cssQuery);
-        return (element != null) ? element.text() : "";
-    }
 }
 
     

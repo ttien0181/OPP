@@ -4,12 +4,15 @@ public class Main {
 	
 	public static void main(String[] args) {
 		
-		String link ="https://www.coindesk.com/";
-		String path = "blockchain_newss.json";
-		DataCollector dataCollector = new DataCollector(link,path);
+		String link ="https://coinmarketcap.com/academy/categories/blog";
+		String path = "blockchain_news.json";
+		//CoindeskCollector coindeskCollector = new CoindeskCollector(link,path);
+		CoinmarketcapCollector coinmarketcapCollector = new CoinmarketcapCollector(path,link);
 		DataExporter dataExporter = new DataExporter(path);
 		
-		dataExporter.exportDataToCSV(dataCollector.scrapData());
+		//dataExporter.exportDataToCSV(coindeskCollector.scrapData());
+		dataExporter.exportDataToCSV(coinmarketcapCollector.scrapData());
+		
 		
 	}
 }
