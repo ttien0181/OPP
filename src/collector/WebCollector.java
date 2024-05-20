@@ -1,4 +1,4 @@
-package object;
+package collector;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,7 +6,7 @@ import java.util.List;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
-public class Collector {
+public class WebCollector {
 	String url;
 	String path;
 	

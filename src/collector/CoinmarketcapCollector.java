@@ -1,4 +1,4 @@
-package object;
+package collector;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -18,7 +18,7 @@ import java.io.FileWriter;
 import org.jsoup.HttpStatusException;
 
 
-public class CoinmarketcapCollector extends Collector{
+public class CoinmarketcapCollector extends WebCollector{
 	public CoinmarketcapCollector(String path,String url){
 		this.url = url;
 		this.path = path;

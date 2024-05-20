@@ -1,4 +1,4 @@
-package object;
+package collector;
 
 public class Main {
 	

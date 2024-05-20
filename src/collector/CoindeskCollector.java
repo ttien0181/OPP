@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package object;
+package collector;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -19,7 +19,7 @@ import java.io.FileWriter;
 import org.jsoup.HttpStatusException;
 
 
-public class CoindeskCollector extends Collector{
+public class CoindeskCollector extends WebCollector{
 
     public CoindeskCollector(String link,String path) {//phương thức khởi tạo
         this.url = link;
