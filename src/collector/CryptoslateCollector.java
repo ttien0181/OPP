@@ -14,8 +14,8 @@ import org.jsoup.select.Elements;
 import java.io.FileWriter;
 import org.jsoup.HttpStatusException;
 
-public class BitcoinmagazineCollector extends WebCollector{
-	public BitcoinmagazineCollector( String path) {
+public class CryptoslateCollector extends WebCollector{
+	public CryptoslateCollector( String path) {
 		this.url = "https://cryptoslate.com/news/";
 		this.path = path;
 	}
@@ -25,7 +25,7 @@ public class BitcoinmagazineCollector extends WebCollector{
 		List<ArticleData> articles = new ArrayList<>();
 		
 		try {
-			for(int i=11;i<12;i++) {
+			for(int i=2;i<50;i++) {
 	        	String existingLinks = new String(Files.readAllBytes(Paths.get(path)));
 	        	
 	    		Document doc = Jsoup.connect(url + "page/" + i +"/")
