@@ -54,7 +54,7 @@ public class Main {
 
         // In ra các đối tượng JSONObject
         for (JSONObject jsonObject : jsonObjectList) {
-            System.out.println(jsonObject.getString("title"));
+            System.out.println(jsonObject.getString("link"));
             
         }
 		
