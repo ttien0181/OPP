@@ -23,12 +23,13 @@ public class DataExporter {
         try {
         	
         	Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        	String json = gson.toJson(articles);
 
             FileWriter writer = new FileWriter(this.filePath,true);
         	//FileWriter writer = new FileWriter(this.filePath);
-            writer.write(json + "\n");
-
+            for (ArticleData article : articles) {
+                String json = gson.toJson(article);
+                writer.write(json + "\n"+",");
+            }
             // Đóng file writer
             writer.close();
             System.out.println("Dữ liệu đã được lưu vào " + filePath);

@@ -25,7 +25,7 @@ public class BitcoinmagazineCollector extends WebCollector{
 		List<ArticleData> articles = new ArrayList<>();
 		
 		try {
-			for(int i=1;i<51;i++) {
+			for(int i=11;i<12;i++) {
 	        	String existingLinks = new String(Files.readAllBytes(Paths.get(path)));
 	        	
 	    		Document doc = Jsoup.connect(url + "page/" + i +"/")
