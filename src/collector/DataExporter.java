@@ -26,6 +26,7 @@ public class DataExporter {
         	String json = gson.toJson(articles);
 
             FileWriter writer = new FileWriter(this.filePath,true);
+        	//FileWriter writer = new FileWriter(this.filePath);
             writer.write(json + "\n");
 
             // Đóng file writer

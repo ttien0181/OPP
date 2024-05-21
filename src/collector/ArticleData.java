@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package collector;
 
 
@@ -33,8 +29,6 @@ public class ArticleData {
         this.author = author;
         this.category = category;
     }
-    
-
   //geter và seter
 	public String getLink() {
 		return link;

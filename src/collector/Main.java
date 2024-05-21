@@ -3,16 +3,20 @@ package collector;
 public class Main {
 	
 	public static void main(String[] args) {
-		
-		String link ="https://coinmarketcap.com/academy/categories/blog";
 		String path = "blockchain_news.json";
-		//CoindeskCollector coindeskCollector = new CoindeskCollector(link,path);
-		CoinmarketcapCollector coinmarketcapCollector = new CoinmarketcapCollector(path,link);
+		//CoindeskCollector coindeskCollector = new CoindeskCollector(path);
+		CoinmarketcapCollector coinmarketcapCollector = new CoinmarketcapCollector(path);
+		//BitcoinmagazineCollector bitcoinmagazineCollector = new BitcoinmagazineCollector(path);
+		//BeincryptoCollector beincryptoCollector =new BeincryptoCollector(path);
+		
 		DataExporter dataExporter = new DataExporter(path);
+
+		
 		
 		//dataExporter.exportDataToCSV(coindeskCollector.scrapData());
 		dataExporter.exportDataToCSV(coinmarketcapCollector.scrapData());
-		
+		//dataExporter.exportDataToCSV(bitcoinmagazineCollector.scrapData());
+		//dataExporter.exportDataToCSV(beincryptoCollector.scrapData());
 		
 	}
 }

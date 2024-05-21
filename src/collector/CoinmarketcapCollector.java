@@ -17,10 +17,9 @@ import org.jsoup.select.Elements;
 import java.io.FileWriter;
 import org.jsoup.HttpStatusException;
 
-
 public class CoinmarketcapCollector extends WebCollector{
-	public CoinmarketcapCollector(String path,String url){
-		this.url = url;
+	public CoinmarketcapCollector(String path){
+		this.url = "https://coinmarketcap.com/academy/categories/blog";
 		this.path = path;
 	}
 	
@@ -29,8 +28,8 @@ public class CoinmarketcapCollector extends WebCollector{
 		List<ArticleData> articles = new ArrayList<>();
 
         try {
-        	for(int i=1;i<20;i++) {
-        		String existingLinks = new String(Files.readAllBytes(Paths.get(path)));//ghi hết dữ liệu trong path ra ,
+        	for(int i=2;i<20;i++) {
+        		String existingLinks = new String(Files.readAllBytes(Paths.get(path)));//ghi hết dữ liệu trong path ra 
             	
         		Document doc = Jsoup.connect(url+"?page=" + i)
         				.userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3")
@@ -61,11 +60,10 @@ public class CoinmarketcapCollector extends WebCollector{
                             String summary = getElementText(doc2,"div.sc-bdfBwQ.ArticleContent__ArticleSummaryBox-sc-18n1x4l-1"); 
                             String title = getElementText(doc2,"h1.sc-bdfBwQ.Text-msjfkz-0.Heading-juwhnu-0.hoXOTC.dAnDNe");;
                             String detailedContent = getElementText(doc2,"article.sc-bdfBwQ.Container-sc-4c5vqs-0.ArticleContent__ArticleContainer-sc-18n1x4l-0");
-                            //String date = null;
-                            String tags = null;
+                            String tags = "";
                             
                             String author = getElementText(doc2,"a.ArticleContent__AuthorLink-sc-18n1x4l-3").replaceAll("By ","");
-                            String category = getElementText(doc2,"a.sc-bdfBwQ.Text-msjfkz-0.jStWLp");
+                            String category = "";
                             
                 			ArticleData article = new ArticleData(link, websiteSource, type, summary, title, detailedContent, date, tags, author, category);
                             articles.add(article);
