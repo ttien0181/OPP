@@ -2,7 +2,7 @@ package main.java.com.newsaggregator.collector;
 
 import main.java.com.newsaggregator.utils.JSONUtils;
 
-public class Main {
+public class MainCollector {
 	
 	public static void main(String[] args) {
 		String path = "blockchain_news.json";
