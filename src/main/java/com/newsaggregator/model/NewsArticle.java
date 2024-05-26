@@ -12,8 +12,9 @@ public class NewsArticle {
     private String tags;
     private String author;
     private String category;
-    
-    public NewsArticle (int ID,String link, String websiteSource, String type, //phương thức khởi tạo
+  //phương thức khởi tạo
+    public NewsArticle (int ID,String link, 
+    		String websiteSource, String type, 
     		String summary, String title, String detailedContent, String date, 
     		String tags, String author, String category){
     	this.ID = ID;

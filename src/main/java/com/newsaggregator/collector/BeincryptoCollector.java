@@ -10,6 +10,7 @@ import org.jsoup.select.Elements;
 import org.jsoup.HttpStatusException;
 
 public class BeincryptoCollector extends NewsCollector{
+	
 	public BeincryptoCollector(String path) {
 		this.path = path;
 		this.url = "https://beincrypto.com/";
@@ -26,7 +27,7 @@ public class BeincryptoCollector extends NewsCollector{
 			e.printStackTrace();
 		}
 		
-		int ID = 4000000 + Count(allData);
+		int ID = 4000000 + count(allData);
 		
         try {
         	for(int i=101;i<126;i++) {
@@ -35,10 +36,10 @@ public class BeincryptoCollector extends NewsCollector{
         				.userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3")
         				.timeout(10000)// đặt thời gian chờ tối đa
         				.get();// kết nối tới url
-        		Elements articleElements  = doc.select("div[class*='shrink-0 rounded-lg md:rounded-xl mb-2.5 md:mb-3 max-w-full overflow-hidden']");//lấy các element của class '...'
+        		Elements articleElements = doc.select("div[class*='shrink-0 rounded-lg md:rounded-xl mb-2.5 md:mb-3 max-w-full overflow-hidden']");//lấy các element của class '...'
         		
         		System.out.println("tìm được " + articleElements.size() + " bài viết");
-        		for (Element articleElement  : articleElements) {// với mỗi Element thu thập được
+        		for (Element articleElement : articleElements) {// với mỗi Element thu thập được
         			try {
         	            Thread.sleep(3000); 
         	        } catch (InterruptedException e) {

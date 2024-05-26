@@ -10,6 +10,7 @@ import org.jsoup.select.Elements;
 import org.jsoup.HttpStatusException;
 
 public class CoindeskCollector extends NewsCollector{
+	
     public CoindeskCollector(String path) {//phương thức khởi tạo
         this.url = "https://www.coindesk.com/";
         this.path = path;
@@ -21,12 +22,12 @@ public class CoindeskCollector extends NewsCollector{
 		String allData = "";
 		
 		try {
-			allData= new String(Files.readAllBytes(Paths.get(path)));
+			allData = new String(Files.readAllBytes(Paths.get(path)));
 		}catch (IOException e) {
 			e.printStackTrace();
 		}
 		
-		int ID = 1000000 + Count(allData);
+		int ID = 1000000 + count(allData);
 		
         try {
         	
@@ -34,18 +35,18 @@ public class CoindeskCollector extends NewsCollector{
     				.userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3")
     				.timeout(10000)// đặt thời gian chờ tối đa
     				.get();// kết nối tới url
-    		Elements articleElements  = doc.select("a[class*='card-titlestyles']");//lấy các element của class '...'
+    		Elements articleElements = doc.select("a[class*='card-titlestyles']");//lấy các element của class '...'
     		
     		System.out.println("tìm được " + articleElements.size() + " bài viết");
     		
-    		for (Element articleElement  : articleElements) {// với mỗi Element thu thập được
+    		for (Element articleElement : articleElements) {// với mỗi Element thu thập được
     			try {
     	            Thread.sleep(3000); 
     	        } catch (InterruptedException e) {
     	            e.printStackTrace();
     	        }
     			try {
-    				String link =  url + articleElement.attr("href");// lấy trong element phần "hrer"(phần sau link), tạo link bằng cách thêm url(đoạn đầu, có thể chỉnh sửa)
+    				String link = url + articleElement.attr("href");// lấy trong element phần "hrer"(phần sau link), tạo link bằng cách thêm url(đoạn đầu, có thể chỉnh sửa)
         			if(!allData.contains(link)) {// nếu link đã tồn tạo trong file, bỏ qua
         				Document doc2 = Jsoup.connect(link).get();// kết nối tới link đã ghép
             			String websiteSource = "CoinDesk";

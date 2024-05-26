@@ -21,7 +21,7 @@ import org.jsoup.HttpStatusException;
 
 public class NewsSearcher {
 	public static void main(String[] args) {
-		String path = "blockchain_news.json";
+		String path = "blockchain_newsss.json";
 		String[] jsonObjects = null;
 		
 		try {
@@ -30,7 +30,7 @@ public class NewsSearcher {
 		}catch (IOException e) {
             e.printStackTrace();
         }
-
+		System.out.println(jsonObjects.length);
         // Điều chỉnh chuỗi để đảm bảo mỗi đối tượng là một JSON hợp lệ
         for (int i = 0; i < jsonObjects.length; i++) {
             if (!jsonObjects[i].startsWith("{")) {

@@ -1,38 +1,45 @@
 package main.java.com.newsaggregator.utils;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 import main.java.com.newsaggregator.model.NewsArticle;
-
-import java.io.IOException;
-import java.util.ArrayList;
+import com.google.gson.*;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-import java.io.FileWriter;
 
 public class JSONUtils {
-	
-	String filePath ;
+	String filePath;
 	
 	public JSONUtils(String path) {
 		this.filePath = path; 
 	}
 	
-	public void exportDataToCSV(List<NewsArticle> articles) {
+	public void exportDataToJSON(List<NewsArticle> articles) {
         try {
-        	
+        	String jsons = "";
         	Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-            FileWriter writer = new FileWriter(this.filePath,true);
-        	//FileWriter writer = new FileWriter(this.filePath);
+            
+            jsons = new String(Files.readAllBytes(Paths.get(filePath)));
+            FileWriter writer = new FileWriter(this.filePath);
+            if (jsons.endsWith("]")) {
+            	jsons = jsons.substring(0, jsons.length() - 1);
+            	jsons = jsons + ",";
+            }
             for (NewsArticle article : articles) {
                 String json = gson.toJson(article);
-                writer.write(json + "\n"+",");
+                jsons=jsons + json + "\n"+",";
             }
+            if (!jsons.startsWith("[")) {
+                jsons = "[\n" + jsons;
+            }
+            if (jsons.endsWith(",")) {
+                jsons = jsons.substring(0, jsons.length() - 1);
+            }
+            if (!jsons.endsWith("]")) {
+            	jsons = jsons + "]";
+            }
+            writer.write(jsons);
             // Đóng file writer
             writer.close();
             System.out.println("Dữ liệu đã được lưu vào " + filePath);
@@ -40,5 +47,4 @@ public class JSONUtils {
             e.printStackTrace();
         }
     }
-	
 }

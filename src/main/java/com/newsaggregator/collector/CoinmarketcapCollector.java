@@ -11,6 +11,7 @@ import org.jsoup.select.Elements;
 import org.jsoup.HttpStatusException;
 
 public class CoinmarketcapCollector extends NewsCollector{
+	
 	public CoinmarketcapCollector(String path){
 		this.url = "https://coinmarketcap.com/academy/";
 		this.path = path;
@@ -22,31 +23,31 @@ public class CoinmarketcapCollector extends NewsCollector{
 		String allData = "";
 		
 		try {
-			allData= new String(Files.readAllBytes(Paths.get(path)));
+			allData = new String(Files.readAllBytes(Paths.get(path)));
 		}catch (IOException e) {
 			e.printStackTrace();
 		}
 		
-		int ID = 2000000 + Count(allData);
+		int ID = 2000000 + count(allData);
 		
         try {
-        	for(int i=2;i<15;i++) {
+        	for(int i=2 ; i<15 ; i++) {
             	
         		Document doc = Jsoup.connect(url+"categories/blockchain?page=" + i)
         				.userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3")
         				.timeout(10000)// đặt thời gian chờ tối đa
         				.get();
-        		Elements articleElements  = doc.select("a[class*='sc-bdfBwQ ArticleCard']");
+        		Elements articleElements = doc.select("a[class*='sc-bdfBwQ ArticleCard']");
         		
         		System.out.println("tìm được " + articleElements.size() + " bài viết");
-        		for (Element articleElement  : articleElements) {
+        		for (Element articleElement : articleElements) {
         			try {
         	            Thread.sleep(3000); 
         	        } catch (InterruptedException e) {
         	            e.printStackTrace();
         	        }
         			try {
-        				String link =  "https://coinmarketcap.com" + articleElement.attr("href");
+        				String link = "https://coinmarketcap.com" + articleElement.attr("href");
             			if(!allData.contains(link)) {//nếu có link trùng, bỏ qua
             				Document doc2 = Jsoup.connect(link).get();
             				

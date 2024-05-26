@@ -10,7 +10,8 @@ import org.jsoup.select.Elements;
 import org.jsoup.HttpStatusException;
 
 public class CryptoslateCollector extends NewsCollector{
-	public CryptoslateCollector( String path) {
+	
+	public CryptoslateCollector(String path) {
 		this.url = "https://cryptoslate.com/";
 		this.path = path;
 	}
@@ -26,9 +27,9 @@ public class CryptoslateCollector extends NewsCollector{
 			e.printStackTrace();
 		}
 		
-		int ID = 3000000 + Count(allData);
+		int ID = 3000000 + count(allData);
 		try {
-			for(int i=56;i<57;i++) {
+			for(int i=60;i<80;i++) {
 	        	
 	    		Document doc = Jsoup.connect(url + "news/page/" + i +"/")
 	    				.userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3")
