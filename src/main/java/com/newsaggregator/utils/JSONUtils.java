@@ -1,6 +1,9 @@
 package main.java.com.newsaggregator.utils;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import main.java.com.newsaggregator.model.NewsArticle;
+import com.fasterxml.jackson.annotation.JsonView;
 import com.google.gson.*;
 import java.io.*;
 import java.nio.file.Files;
@@ -17,7 +20,10 @@ public class JSONUtils {
 	public void exportDataToJSON(List<NewsArticle> articles) {
         try {
         	String jsons = "";
-        	Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        	ObjectMapper objectMapper = new ObjectMapper();
+        	objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+        	
+//        	Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
             
             jsons = new String(Files.readAllBytes(Paths.get(filePath)));
@@ -27,7 +33,7 @@ public class JSONUtils {
             	jsons = jsons + ",";
             }
             for (NewsArticle article : articles) {
-                String json = gson.toJson(article);
+                String json = objectMapper.writeValueAsString(article);
                 jsons=jsons + json + "\n"+",";
             }
             if (!jsons.startsWith("[")) {

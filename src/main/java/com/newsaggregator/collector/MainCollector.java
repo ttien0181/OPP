@@ -15,9 +15,9 @@ public class MainCollector {
 		JSONUtils dataExporter = new JSONUtils(path);
 
 		//dataExporter.exportDataToJSON(coindeskCollector.scrapData());
-		//dataExporter.exportDataToJSON(coinmarketcapCollector.scrapData());
+		dataExporter.exportDataToJSON(coinmarketcapCollector.scrapData());
 		//dataExporter.exportDataToJSON(cryptoslateCollector.scrapData());
 		//dataExporter.exportDataToJSON(beincryptoCollector.scrapData());
-		dataExporter.exportDataToJSON(newsbtcCollector.scrapData());
+		//dataExporter.exportDataToJSON(newsbtcCollector.scrapData());
 	}
 }

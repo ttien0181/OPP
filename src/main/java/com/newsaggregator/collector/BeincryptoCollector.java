@@ -30,8 +30,12 @@ public class BeincryptoCollector extends NewsCollector{
 		int ID = 4000000 + count(allData);
 		
         try {
-        	for(int i=101;i<126;i++) {
-            	
+        	for(int i=2;i<62;i++) {
+        		try {
+        			allData = new String(Files.readAllBytes(Paths.get(path)));
+        		}catch (IOException e) {
+        			e.printStackTrace();
+        		}
         		Document doc = Jsoup.connect(url + "page/" + i + "/?s=blockchain")
         				.userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3")
         				.timeout(10000)// đặt thời gian chờ tối đa
@@ -41,30 +45,29 @@ public class BeincryptoCollector extends NewsCollector{
         		System.out.println("tìm được " + articleElements.size() + " bài viết");
         		for (Element articleElement : articleElements) {// với mỗi Element thu thập được
         			try {
-        	            Thread.sleep(3000); 
+        	            Thread.sleep(500); 
         	        } catch (InterruptedException e) {
         	            e.printStackTrace();
         	        }
         			try {
         				Element articleLink = articleElement.selectFirst("a");// lấy link
         				String link =  articleLink.attr("href");
-        				System.out.println(link);
-            			if(!allData.contains(link)) {// nếu link đã tồn tạo trong file, bỏ qua
-            				Document doc2 = Jsoup.connect(link).get();// kết nối tới link đã ghép
+        				Document doc2 = Jsoup.connect(link).get();// kết nối tới link đã ghép
+        				String detailedContent = getElementText(doc2, "div[class*='entry-content-inner'] > p");
+            			if(!allData.contains(link) && !detailedContent.isEmpty()) {// nếu link đã tồn tạo trong file, bỏ qua
+            				
                 			String websiteSource = getElementAttr(doc2, "meta[property='og:site_name']", "content");;
                             String type = getElementAttr(doc2, "meta[property='og:type']", "content");
                             String summary = ""; 
                             String title = getElementAttr(doc2, "meta[property='og:title']", "content");
-                            String detailedContent = getElementText(doc2, "div[class*='entry-content-inner'] > p");
+                            
                             String date = getElementAttr(doc2, "meta[property='article:modified_time']", "content");
                             String tags = getElementAttr(doc2, "meta[property='article:tag']", "content");
                             String author = getElementAttr(doc2, "meta[name='author']", "content");
                             
                             Elements categoryElement = doc2.select("a.whitespace-nowrap.inline-flex.items-center.p4.font-sans.font-normal.text-currentColor.hover\\:underline");
                             String category = categoryElement.text();
-                            System.out.println("afdsaf");
                 			NewsArticle article = new NewsArticle(++ID,link, websiteSource, type, summary, title, detailedContent, date, tags, author, category);// tạo đối tượng ArData
-                			System.out.println("jjjjjjjj");
                             articles.add(article);// thêm vào List
                             System.out.println(article.getID());
             			}

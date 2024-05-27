@@ -41,19 +41,27 @@ public class CoindeskCollector extends NewsCollector{
     		
     		for (Element articleElement : articleElements) {// với mỗi Element thu thập được
     			try {
-    	            Thread.sleep(3000); 
+    	            Thread.sleep(500); 
     	        } catch (InterruptedException e) {
     	            e.printStackTrace();
     	        }
     			try {
+    				allData = new String(Files.readAllBytes(Paths.get(path)));
+    			}catch (IOException e) {
+    				e.printStackTrace();
+    			}
+    			try {
     				String link = url + articleElement.attr("href");// lấy trong element phần "hrer"(phần sau link), tạo link bằng cách thêm url(đoạn đầu, có thể chỉnh sửa)
-        			if(!allData.contains(link)) {// nếu link đã tồn tạo trong file, bỏ qua
-        				Document doc2 = Jsoup.connect(link).get();// kết nối tới link đã ghép
+    				Document doc2 = Jsoup.connect(link).get();// kết nối tới link đã ghép
+    				String detailedContent = getElementText(doc2, "div[class*='at-text'] > p");
+    				
+        			if(!allData.contains(link) && !detailedContent.isEmpty()) {// nếu link đã tồn tạo trong file, bỏ qua
+        				
             			String websiteSource = "CoinDesk";
                         String type = getElementAttr(doc2, "meta[property='og:type']", "content");
-                        String summary = ""; 
+                        String summary = getElementAttr(doc2, "meta[property='og:description']", "content");
                         String title = getElementAttr(doc2, "meta[property='og:title']", "content");
-                        String detailedContent = getElementText(doc2, "div[class*='at-text'] > p");
+                        
                         String date = getElementAttr(doc2, "meta[property='article:modified_time']", "content");
                         String tags = getElementAttr(doc2, "meta[property='article:tag']", "content");
                         String author = getElementAttr(doc2, "meta[property='article:author']", "content");

@@ -29,8 +29,12 @@ public class CryptoslateCollector extends NewsCollector{
 		
 		int ID = 3000000 + count(allData);
 		try {
-			for(int i=60;i<80;i++) {
-	        	
+			for(int i=2;i<62;i++) {
+				try {
+        			allData = new String(Files.readAllBytes(Paths.get(path)));
+        		}catch (IOException e) {
+        			e.printStackTrace();
+        		}
 	    		Document doc = Jsoup.connect(url + "news/page/" + i +"/")
 	    				.userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3")
 	    				.timeout(10000)// đặt thời gian chờ tối đa
@@ -42,7 +46,7 @@ public class CryptoslateCollector extends NewsCollector{
 	    		
 	    		for (Element articleElement  : post) {
 	    			try {
-	    	            Thread.sleep(3000); 
+	    	            Thread.sleep(500); 
 	    	        } catch (InterruptedException e) {
 	    	            e.printStackTrace();
 	    	        }
@@ -50,16 +54,16 @@ public class CryptoslateCollector extends NewsCollector{
 	    				
 	    				Element articleLink = articleElement.selectFirst("a");// lấy link
 	    				String link =  articleLink.attr("href");
-	    				
-	    				System.out.println(link);
-	        			if(!allData.contains(link)) {
+	    				Document doc2 = Jsoup.connect(link).get();
+	    				String detailedContent = getElementText(doc2, "article[class*='full-article'] > p");
+	        			if(!allData.contains(link) && !detailedContent.isEmpty()) {
 	    				//if(true) {
-	        				Document doc2 = Jsoup.connect(link).get();
+	        				
 	            			String websiteSource = getElementAttr(doc2, "meta[property='og:site_name']", "content");
 	                        String type = getElementAttr(doc2, "meta[property='og:type']", "content");
 	                        String summary = "";
 	                        String title = getElementAttr(doc2, "meta[property='og:title']", "content");
-	                        String detailedContent = getElementText(doc2, "article[class*='full-article'] > p");
+	                        
 	                        String date = getElementAttr(doc2, "meta[property='article:modified_time']", "content");
 	                        String tags = "";
 	                        String author = getElementAttr(doc2, "meta[name='author']", "content");

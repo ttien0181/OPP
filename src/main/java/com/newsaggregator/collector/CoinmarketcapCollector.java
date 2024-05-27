@@ -31,45 +31,60 @@ public class CoinmarketcapCollector extends NewsCollector{
 		int ID = 2000000 + count(allData);
 		
         try {
-        	for(int i=2 ; i<15 ; i++) {
-            	
+        	for(int i=3 ; i<5 ; i++) {
+        		
+        		System.out.println(url+"search?page=" + i + "&term=Blockchain");
         		Document doc = Jsoup.connect(url+"categories/blockchain?page=" + i)
         				.userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3")
         				.timeout(10000)// đặt thời gian chờ tối đa
         				.get();
+        		try {
+    	            Thread.sleep(2000); 
+    	        } catch (InterruptedException e) {
+    	            e.printStackTrace();
+    	        }
         		Elements articleElements = doc.select("a[class*='sc-bdfBwQ ArticleCard']");
         		
         		System.out.println("tìm được " + articleElements.size() + " bài viết");
         		for (Element articleElement : articleElements) {
         			try {
-        	            Thread.sleep(3000); 
+        	            Thread.sleep(500); 
         	        } catch (InterruptedException e) {
         	            e.printStackTrace();
         	        }
+        			
+        			
         			try {
         				String link = "https://coinmarketcap.com" + articleElement.attr("href");
-            			if(!allData.contains(link)) {//nếu có link trùng, bỏ qua
-            				Document doc2 = Jsoup.connect(link).get();
+        				Document doc2 = Jsoup.connect(link).get();
+        				String detailedContent = getElementText(doc2,"article.sc-bdfBwQ.Container-sc-4c5vqs-0.ArticleContent__ArticleContainer-sc-18n1x4l-0");
+        				
+            			if(!allData.contains(link) && !detailedContent.isEmpty() && !isLinkInArticles(articles, link)) {//nếu có link trùng hoặc bài viết rỗng, bỏ qua
             				
-            				//lấy date
+            				
             				Elements scripts = doc2.select("script[type=\"application/ld+json\"]");
             				String jsonLd = scripts.html();
             				JSONObject jsonObject = new JSONObject(jsonLd);
             				String date = jsonObject.getString("datePublished");
+            				//lấy date
+            				
             				
                 			String websiteSource = "CoinMarketCap";
-                            String type = getElementText(doc2,"a.sc-bdfBwQ.Text-msjfkz-0");
+                			
+                            String type = getElementAttr(doc2, "meta[property='og:type']", "content");
+                			
+                					
                             String summary = getElementText(doc2,"div.sc-bdfBwQ.ArticleContent__ArticleSummaryBox-sc-18n1x4l-1"); 
-                            String title = getElementText(doc2,"h1.sc-bdfBwQ.Text-msjfkz-0.Heading-juwhnu-0.hoXOTC.dAnDNe");;
-                            String detailedContent = getElementText(doc2,"article.sc-bdfBwQ.Container-sc-4c5vqs-0.ArticleContent__ArticleContainer-sc-18n1x4l-0");
+                            String title = getElementAttr(doc2, "meta[property='og:title']", "content");
+                            
                             String tags = "";
                             
                             String author = getElementText(doc2,"a.ArticleContent__AuthorLink-sc-18n1x4l-3").replaceAll("By ","");
-                            String category = "";
+                            String category = doc2.selectFirst("a[class*=sc-bdfBwQ Text-msjfkz-0 jStWLp]").text();
                             
                 			NewsArticle article = new NewsArticle(++ID,link, websiteSource, type, summary, title, detailedContent, date, tags, author, category);
                             articles.add(article);
-                            System.out.println(article.getID() + "  ////  " + article.getSummary());
+                            System.out.println(article.getLink() + "\n  " + article.getID());
             			}
         			} catch (HttpStatusException e) {
         		        // Nếu gặp lỗi HTTP, bỏ qua bài viết và tiếp tục vòng lặp

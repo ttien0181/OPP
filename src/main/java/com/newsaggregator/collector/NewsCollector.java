@@ -28,4 +28,13 @@ public abstract class NewsCollector {
 		String[] substrings = data.split(url, -1);
 		return substrings.length -1;
 	}
+    
+    public static boolean isLinkInArticles(List<NewsArticle> articles, String linkToCheck) {
+        for (NewsArticle article : articles) {
+            if (article.getLink().equals(linkToCheck)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

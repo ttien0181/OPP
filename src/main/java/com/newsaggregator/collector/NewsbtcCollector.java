@@ -4,7 +4,6 @@ import main.java.com.newsaggregator.model.NewsArticle;
 import java.io.IOException;
 import java.util.*;
 import java.nio.file.*;
-import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.*;
 import org.jsoup.select.Elements;
@@ -30,8 +29,12 @@ public class NewsbtcCollector extends NewsCollector{
 		int ID = 5000000 + count(allData);
 		
         try {
-        	for(int i=24 ; i<25 ; i++) {
-            	
+        	for(int i=2 ; i<62 ; i++) {
+        		try {
+        			allData = new String(Files.readAllBytes(Paths.get(path)));
+        		}catch (IOException e) {
+        			e.printStackTrace();
+        		}
         		Document doc = Jsoup.connect(url+"page/" + i + "/?s=blockchain")
         				.userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3")
         				.timeout(20000)// đặt thời gian chờ tối đa
@@ -48,13 +51,15 @@ public class NewsbtcCollector extends NewsCollector{
         			try {
         				Element a = articleElement.selectFirst("a");
         				String link = a.attr("href");
-            			if(!allData.contains(link)) {//nếu có link trùng, bỏ qua
-            				Document doc2 = Jsoup.connect(link).get();
+        				Document doc2 = Jsoup.connect(link).get();
+        				String detailedContent = getElementText(doc2, "div[class*='content-inner'] > p");
+            			if(!allData.contains(link) && !detailedContent.isEmpty()) {//nếu có link trùng, bỏ qua
+//            				Document doc2 = Jsoup.connect(link).get();
 	            			String websiteSource = getElementAttr(doc2, "meta[property='og:site_name']", "content");
 	                        String type = getElementAttr(doc2, "meta[property='og:type']", "content");
 	                        String summary = getElementAttr(doc2, "meta[property='og:description']", "content");
 	                        String title = getElementAttr(doc2, "meta[property='og:title']", "content");
-	                        String detailedContent = getElementText(doc2, "div[class*='content-inner'] > p");
+//	                        String detailedContent = getElementText(doc2, "div[class*='content-inner'] > p");
 	                        String date = getElementAttr(doc2, "meta[property='article:modified_time']", "content");
 	                        String tags = "";
 	                        String author = getElementAttr(doc2, "meta[name='author']", "content");
