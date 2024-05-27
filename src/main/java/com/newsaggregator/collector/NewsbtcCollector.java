@@ -29,7 +29,7 @@ public class NewsbtcCollector extends NewsCollector{
 		int ID = 5000000 + count(allData);
 		
         try {
-        	for(int i=2 ; i<62 ; i++) {
+        	for(int i=2 ; i<42 ; i++) {
         		try {
         			allData = new String(Files.readAllBytes(Paths.get(path)));
         		}catch (IOException e) {
@@ -53,7 +53,7 @@ public class NewsbtcCollector extends NewsCollector{
         				String link = a.attr("href");
         				Document doc2 = Jsoup.connect(link).get();
         				String detailedContent = getElementText(doc2, "div[class*='content-inner'] > p");
-            			if(!allData.contains(link) && !detailedContent.isEmpty()) {//nếu có link trùng, bỏ qua
+            			if(!allData.contains(link) && !detailedContent.isEmpty() && !isLinkInArticles(articles, link)) {//nếu có link trùng, bỏ qua
 //            				Document doc2 = Jsoup.connect(link).get();
 	            			String websiteSource = getElementAttr(doc2, "meta[property='og:site_name']", "content");
 	                        String type = getElementAttr(doc2, "meta[property='og:type']", "content");

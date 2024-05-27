@@ -31,15 +31,20 @@ public class CoinmarketcapCollector extends NewsCollector{
 		int ID = 2000000 + count(allData);
 		
         try {
-        	for(int i=3 ; i<5 ; i++) {
-        		
-        		System.out.println(url+"search?page=" + i + "&term=Blockchain");
-        		Document doc = Jsoup.connect(url+"categories/blockchain?page=" + i)
+        	for(int i=2 ; i<20 ; i++) {
+        		System.out.println(i);
+        		try {
+    	            Thread.sleep(50000); 
+    	        } catch (InterruptedException e) {
+    	            e.printStackTrace();
+    	        }
+        		Document doc = Jsoup.connect(url+"categories/blockchain?page=" + i )
         				.userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3")
         				.timeout(10000)// đặt thời gian chờ tối đa
         				.get();
+        		System.out.println(doc);
         		try {
-    	            Thread.sleep(2000); 
+    	            Thread.sleep(500); 
     	        } catch (InterruptedException e) {
     	            e.printStackTrace();
     	        }

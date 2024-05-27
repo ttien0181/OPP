@@ -29,9 +29,9 @@ public abstract class NewsCollector {
 		return substrings.length -1;
 	}
     
-    public static boolean isLinkInArticles(List<NewsArticle> articles, String linkToCheck) {
+    public boolean isLinkInArticles(List<NewsArticle> articles, String link) {
         for (NewsArticle article : articles) {
-            if (article.getLink().equals(linkToCheck)) {
+            if (article.getLink().equals(link)) {
                 return true;
             }
         }

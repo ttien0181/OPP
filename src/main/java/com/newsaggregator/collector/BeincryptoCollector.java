@@ -54,7 +54,7 @@ public class BeincryptoCollector extends NewsCollector{
         				String link =  articleLink.attr("href");
         				Document doc2 = Jsoup.connect(link).get();// kết nối tới link đã ghép
         				String detailedContent = getElementText(doc2, "div[class*='entry-content-inner'] > p");
-            			if(!allData.contains(link) && !detailedContent.isEmpty()) {// nếu link đã tồn tạo trong file, bỏ qua
+            			if(!allData.contains(link) && !detailedContent.isEmpty() && !isLinkInArticles(articles, link)) {// nếu link đã tồn tạo trong file, bỏ qua
             				
                 			String websiteSource = getElementAttr(doc2, "meta[property='og:site_name']", "content");;
                             String type = getElementAttr(doc2, "meta[property='og:type']", "content");

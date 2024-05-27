@@ -6,7 +6,7 @@ public class MainCollector {
 	
 	public static void main(String[] args) {
 		
-		String path = "blockchain_newsss.json";
+		String path = "blockchain_news.json";
 		CoindeskCollector coindeskCollector = new CoindeskCollector(path);
 		CoinmarketcapCollector coinmarketcapCollector = new CoinmarketcapCollector(path);
 		CryptoslateCollector cryptoslateCollector = new CryptoslateCollector(path);
@@ -15,9 +15,9 @@ public class MainCollector {
 		JSONUtils dataExporter = new JSONUtils(path);
 
 		//dataExporter.exportDataToJSON(coindeskCollector.scrapData());
-		dataExporter.exportDataToJSON(coinmarketcapCollector.scrapData());
+		//dataExporter.exportDataToJSON(coinmarketcapCollector.scrapData());
 		//dataExporter.exportDataToJSON(cryptoslateCollector.scrapData());
 		//dataExporter.exportDataToJSON(beincryptoCollector.scrapData());
-		//dataExporter.exportDataToJSON(newsbtcCollector.scrapData());
+		dataExporter.exportDataToJSON(newsbtcCollector.scrapData());
 	}
 }

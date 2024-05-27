@@ -45,17 +45,13 @@ public class CoindeskCollector extends NewsCollector{
     	        } catch (InterruptedException e) {
     	            e.printStackTrace();
     	        }
-    			try {
-    				allData = new String(Files.readAllBytes(Paths.get(path)));
-    			}catch (IOException e) {
-    				e.printStackTrace();
-    			}
+    			
     			try {
     				String link = url + articleElement.attr("href");// lấy trong element phần "hrer"(phần sau link), tạo link bằng cách thêm url(đoạn đầu, có thể chỉnh sửa)
     				Document doc2 = Jsoup.connect(link).get();// kết nối tới link đã ghép
     				String detailedContent = getElementText(doc2, "div[class*='at-text'] > p");
     				
-        			if(!allData.contains(link) && !detailedContent.isEmpty()) {// nếu link đã tồn tạo trong file, bỏ qua
+        			if(!allData.contains(link) && !detailedContent.isEmpty() && !isLinkInArticles(articles, link)) {// nếu link đã tồn tạo trong file, bỏ qua
         				
             			String websiteSource = "CoinDesk";
                         String type = getElementAttr(doc2, "meta[property='og:type']", "content");

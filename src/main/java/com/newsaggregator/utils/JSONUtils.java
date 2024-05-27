@@ -11,7 +11,7 @@ import java.nio.file.Paths;
 import java.util.List;
 
 public class JSONUtils {
-	String filePath;
+	private String filePath;
 	
 	public JSONUtils(String path) {
 		this.filePath = path; 

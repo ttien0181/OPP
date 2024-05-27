@@ -56,7 +56,7 @@ public class CryptoslateCollector extends NewsCollector{
 	    				String link =  articleLink.attr("href");
 	    				Document doc2 = Jsoup.connect(link).get();
 	    				String detailedContent = getElementText(doc2, "article[class*='full-article'] > p");
-	        			if(!allData.contains(link) && !detailedContent.isEmpty()) {
+	        			if(!allData.contains(link) && !detailedContent.isEmpty() && !isLinkInArticles(articles, link)) {
 	    				//if(true) {
 	        				
 	            			String websiteSource = getElementAttr(doc2, "meta[property='og:site_name']", "content");
